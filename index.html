@@ -1,0 +1,245 @@
+<html>
+<head>
+<title>Meal Budget Planner</title>
+<style> 
+  * {
+      font-family: 'Segoe UI', sans-serif;
+      box-sizing: border-box;
+	font-size:10px;
+    }
+
+    body {
+      background-color: #23e2bf;
+      padding: 20px;
+    }
+
+    h1 {
+font-size:45px;
+      text-align: center;
+      background-color: #E22346;
+      margin-bottom:20px auto;
+	border-radius:50px;
+color:white;
+    }
+
+    form {
+      max-width: 500px;
+      margin: auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+
+    label {
+      display: block;
+      font-size: 18px;
+      margin: 12px 0 6px;
+      color: #333;
+      text-align: left;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .btn {
+      width: 30%;
+      padding: 10px;
+      margin: 15px 1%;
+      font-size: 16px;
+      background-color: #E22346;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn:hover {
+      background-color:  #23e2bf;
+    }
+
+       #msg {
+      max-width: 500px;
+    
+      padding: 20px;
+      font-size: 20px;
+	margin:auto;
+      color:  WHITE;
+      background-color: #E22346;
+      border-left: 6px solid #E22346;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+</style>
+</head>
+<body>
+<h1>Meal Budget Planner</h1>
+<form onsubmit="show()">
+<label>Enter Your Budget:</label>
+
+<input type = "number" step="0.01" placeholder="Enter your budget" id="budget"/>
+<label>Number of special Meals:</label>
+
+<input type="number" placeholder="Enter no. of special meals" id="special"/>
+<label>Number of Days:</label>
+<input type="number" placeholder="No. of days" id="days"/>
+
+<label>Number of Meals per day:</label>
+<input type="number" placeholder="No. of meals per day" id="pday"/>
+<br/><br/>
+<label>Budget Breakdown:</label>
+<br/>
+<input type="submit" value="Normal Meal" class = "btn">
+<input type="submit" value="Special Meal" class = "btn">
+<input type="submit" value="Savings" class = "btn">
+
+</form>
+<h2 id="msg"/>
+<script>
+function show()
+{
+event.preventDefault();
+
+let action = document.activeElement.value;
+let msg = document.getElementById("msg");
+let budget = document.getElementById("budget");
+let special = document.getElementById("special");
+let days = document.getElementById("days");
+let pday = document.getElementById("pday");
+
+if(budget.value < 0)
+{alert("Input cannot be negative");
+msg.innerHTML="";
+budget.value="";
+return;
+}
+if(special.value < 0)
+{alert("Input cannot be negative");
+msg.innerHTML="";
+special.value="";
+return;
+}
+if(days.value < 0)
+{alert("Input cannot be negative");
+msg.innerHTML="";
+days.value="";
+return;
+}
+
+if(budget.value==="")
+{
+alert("Please enter your budget");
+msg.innerHTML="";
+budget.focus();
+return;
+}
+
+if(special.value==="")
+{
+alert("Please enter Number of special meals allowed ");
+msg.innerHTML="";
+special.focus();
+
+return;
+}
+
+if(days.value==="")
+{
+alert("Please enter Number of days");
+msg.innerHTML="";
+days.focus();
+return;
+}
+
+if(pday.value==="")
+{
+alert("Please enter Number of meals user will eat per day ");
+msg.innerHTML="";
+pday.focus();
+return;
+}
+
+
+
+let bgt=parseFloat(budget.value); 
+let sp=parseInt(special.value); 
+let d=parseInt(days.value); 
+let pd = parseInt(pday.value);
+
+let meals = d * pd; 
+let nm = meals - sp
+let spl = sp * 2;
+
+let tm = nm + spl;
+
+let res=parseInt((bgt/tm)/5);
+
+let normal_meal = res*5;
+let special_meal = res*5*2;
+
+let savings = bgt - ((normal_meal*nm) +(special_meal*sp));
+
+
+if (action === "Normal Meal"){
+msg.innerHTML="You can spend ₹ "+ normal_meal.toFixed(2) + " on a Normal Meal ";
+} 
+
+
+else if (action === "Special Meal"){
+if(sp===0)
+{
+msg.innerHTML="0 special meals selected";
+}
+else
+msg.innerHTML="You can spend ₹ "+ special_meal.toFixed(2) + " on a Special Meal ";
+} 
+
+
+else{
+msg.innerHTML="You will save ₹ "+ savings.toFixed(2) + "(depends on rounding down per meal)";
+} 
+
+
+
+
+}
+
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
